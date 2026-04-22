@@ -1,0 +1,21 @@
+{
+  "name": "libswu-meeting-room-booking",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test_backend": "cd backend && npm test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/james-nightlife/libswu-meeting-room-booking.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "module",
+  "bugs": {
+    "url": "https://github.com/james-nightlife/libswu-meeting-room-booking/issues"
+  },
+  "homepage": "https://github.com/james-nightlife/libswu-meeting-room-booking#readme"
+}
