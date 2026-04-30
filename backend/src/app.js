@@ -1,15 +1,20 @@
-import configMongoose from "./config/configMongoose.js";
+import express from "express";
+import helmet from "helmet";
+import cors from "cors";
+import cookieParser from "cookie-parser";
 
-const start = async (app, port) => {
-    try{
-        await configMongoose();
-        app.listen(port, () => {
-            console.log(`Server running on port ${port}`);
-        });
-    }catch(e){
-        console.error(e);
-        return;
-    }
-};
+import { corsOptions } from "./config/configCors.js";
 
-export default start;
+import routeAuth from "./route/routeAuth.js";
+
+const app = express();
+
+app.use(helmet());
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+app.use(cookieParser());
+app.use(cors(corsOptions));
+
+app.use('/auth', routeAuth);
+
+export default app;
