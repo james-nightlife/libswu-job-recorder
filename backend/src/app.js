@@ -6,6 +6,7 @@ import cookieParser from "cookie-parser";
 import { corsOptions } from "./config/configCors.js";
 
 import routeAuth from "./route/routeAuth.js";
+import routeJobRecord from "./route/routeJobRecord.js";
 
 const app = express();
 
@@ -16,5 +17,6 @@ app.use(cookieParser());
 app.use(cors(corsOptions));
 
 app.use('/auth', routeAuth);
+app.use('/jobRecord', routeJobRecord)
 
 export default app;
