@@ -16,7 +16,13 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(cors(corsOptions));
 
+app.use((req, res, next) => {
+  console.log(`${req.method} ${req.path}`);
+  next();
+});
+
 app.use('/auth', routeAuth);
 app.use('/jobRecord', routeJobRecord)
+app.use("/upload", express.static('src/upload'))
 
 export default app;
