@@ -13,11 +13,11 @@ const schemaJobRecord = new mongoose.Schema({
         type: Date,
         required: true,
     },
-    assignment: {
+    description: {
         type: String,
         required: true,
     },
-    description: {
+    progression: {
         type: String,
         required: true,
     },
