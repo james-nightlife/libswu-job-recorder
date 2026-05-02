@@ -1,0 +1,22 @@
+{
+  "name": "libswu-job-recorder",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test_backend": "cd backend & npm i & npm run test",
+    "test_frontend": "cd frontend & npm i & npm run dev"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/james-nightlife/libswu-job-recorder.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/james-nightlife/libswu-job-recorder/issues"
+  },
+  "homepage": "https://github.com/james-nightlife/libswu-job-recorder#readme"
+}
