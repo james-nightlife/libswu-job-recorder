@@ -4,8 +4,10 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test_backend": "cd backend & npm i & npm run test",
-    "test_frontend": "cd frontend & npm i & npm run dev"
+    "backend_test": "cd backend & npm i & npm run test",
+    "backend_start": "cd backend & npm i & npm run start",
+    "frontend_dev": "cd frontend & npm i & npm run dev",
+    "frontend_build": "cd frontend & npm i & npm run build"
   },
   "repository": {
     "type": "git",

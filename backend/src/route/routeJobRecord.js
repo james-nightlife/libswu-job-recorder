@@ -5,9 +5,9 @@ import upload from '../middleware/uploadFiles.js'
 const router = express.Router();
 
 router.get('/', validateToken, getAllJobRecord);
-router.get('/:id', validateToken, getOneJobRecord);
+router.get('/:_id', validateToken, getOneJobRecord);
 router.post('/', validateToken, upload.array('files[]') , postJobRecord);
-router.put('/', validateToken, putJobRecord);
-router.delete('/:id', validateToken, deleteJobRecord);
+router.put('/:_id', validateToken, putJobRecord);
+router.delete('/:_id', validateToken, deleteJobRecord);
 
 export default router;
