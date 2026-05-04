@@ -16,7 +16,7 @@ const Home = () => {
 
   const handleSignOut = () => {
     localStorage.clear();
-    navigate('/');
+    navigate('/sign-in');
   };
 
   const fetchData = async () => {

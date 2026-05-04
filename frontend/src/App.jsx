@@ -18,7 +18,9 @@ function App() {
         <Route path='new-report' element={<NewReport />} />
         <Route path='*' element={<h1>ไม่พบหน้า</h1>} />
       </Route>
-    )
+    ),{
+      basename: '/jobRecorder'
+    }
   )
 
 
