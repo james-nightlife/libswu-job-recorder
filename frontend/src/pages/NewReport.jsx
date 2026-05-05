@@ -94,7 +94,7 @@ const NewReport = () => {
           className='border p-1' 
           required
           className='border p-1'></textarea>
-          <label htmlFor="progression">ความคืบหน้า / ความสำเร็จ</label>
+          <label htmlFor="progression">หลักฐานแสดงความคืบหน้า / ความสำเร็จ</label>
           <textarea 
           id="progression" 
           name="progression" 
