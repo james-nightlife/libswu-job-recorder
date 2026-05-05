@@ -22,7 +22,7 @@ app.use((req, res, next) => {
 });
 
 app.use('/auth', routeAuth);
-app.use('/jobRecord', routeJobRecord)
+app.use('/job-record', routeJobRecord)
 app.use("/upload", express.static('src/upload'))
 
 export default app;

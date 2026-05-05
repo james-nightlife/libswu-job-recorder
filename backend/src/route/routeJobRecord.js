@@ -7,7 +7,7 @@ const router = express.Router();
 router.get('/', validateToken, getAllJobRecord);
 router.get('/:_id', validateToken, getOneJobRecord);
 router.post('/', validateToken, upload.array('files[]') , postJobRecord);
-router.put('/:_id', validateToken, putJobRecord);
+router.put('/:_id', validateToken, upload.array('files[]'), putJobRecord);
 router.delete('/:_id', validateToken, deleteJobRecord);
 
 export default router;

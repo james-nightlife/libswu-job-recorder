@@ -1,17 +1,60 @@
-import React from 'react'
-import { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import axios from 'axios';
+import React, { useEffect, useState } from 'react'
+import { Link, useNavigate, useParams } from 'react-router-dom'
+import axios from 'axios'
 
-const NewReport = () => {
+const EditReport = () => {
+    const { _id } = useParams();
     const navigate = useNavigate();
-    const [buttonSubmit, setButtonSubmit] = useState(false);
+
+    const [data, setData] = useState({})
+    const [buttonSubmit, setButtonSubmit] = useState(false)
+
+    useEffect(() => {
+        fetchData();
+    }, [])
+
+    const fetchData = async () => {
+        try{
+            const res = await axios.get(
+                `${import.meta.env.VITE_API}/job-record/${_id}`,
+                {
+                    headers: {
+                        Authorization: localStorage.getItem('token')
+                    }
+                }
+            )
+            const res_data = res.data;
+
+            // Format the date right here if it exists
+            if (res_data.workDate) {
+                res_data.workDate = new Date(res_data.workDate).toLocaleDateString('sv-SE');
+            }
+            setData(res_data);
+            
+        }catch(e){
+            console.error(e);
+            if(e.response.status === 403){
+                alert('เซสชันหมดอายุ กรุณาลงชื่อเข้าใช้งานระบบใหม่')
+                return navigate('/sign-in');
+            }
+            alert('เกิดปัญหาทางเทคนิค');
+        }
+    }
+
+    /**
+
+    useEffect(() => {
+        //console.log(new Date(data.workDate).toLocaleDateString('sv-SE', {year: 'numeric', month: '2-digit', day: '2-digit'}))
+        setData({...data, newWorkDate: new Date(data.workDate).toLocaleDateString('sv-SE', {year: 'numeric', month: '2-digit', day: '2-digit'})})
+    }, [data.workDate])
+
+     */
+
     const handleSubmit = async (e) => {
         setButtonSubmit(true);
         e.preventDefault();
 
-        const [username, 
-          name, 
+        const [  
           workdate, 
           description, 
           progression, 
@@ -19,8 +62,6 @@ const NewReport = () => {
           minutes,
           files
         ] =  [
-          localStorage.getItem('username'),
-          e.target.name.value,
           e.target.workdate.value,
           e.target.description.value,
           e.target.progression.value,
@@ -30,21 +71,20 @@ const NewReport = () => {
         ]
 
         const form = new FormData();
-        form.append('username', username);
-        form.append('name', name);
         form.append('workDate', workdate);
         form.append('description', description);
         form.append('progression', progression);
         form.append('hours', hours);
         form.append('minutes', minutes);
+        form.append('oldFiles', data.fileNames);
         Array.from(files).forEach(file => {
           // Use the same key name to send them as a collection
           form.append('files[]', file); 
         });
-        //alert(`ชื่อ-สกุล: ${name}\nวันที่ปฏิบัติงาน: ${workdate}\nรายละเอียด: ${description}\nความคืบหน้า/ความสำเร็จ: ${progression}\nระยะเวลา: ${hours} ชั่วโมง ${minutes} นาที\nจำนวนไฟล์แนบ: ${files.length} ไฟล์`);
+
         try{
-          const res = await axios.post(
-            `${import.meta.env.VITE_API}/job-record`,
+          const res = await axios.put(
+            `${import.meta.env.VITE_API}/job-record/${_id}`,
               form,
             {
               headers:{
@@ -62,12 +102,13 @@ const NewReport = () => {
         setButtonSubmit(false);
     }
 
+    
   return (
     <>
-      <div className='flex justify-center p-4'>
+        <div className='flex justify-center p-4'>
         <div className='flex flex-col gap-4 p-4 border'>
           <h1 className='text-center'>ระบบรายงานการปฏิบัติงานประจำวัน</h1>
-          <h2 className='text-center'>สร้างรายงานใหม่</h2>
+          <h2 className='text-center'>แก้ไขบันทึก</h2>
         <form 
         onSubmit={handleSubmit}
         className='flex flex-col w-full gap-2'>
@@ -76,7 +117,7 @@ const NewReport = () => {
           type="text" 
           id="name" 
           name="name" 
-          value={localStorage.getItem('name')} 
+          value={data.name || ''} 
           className='border p-1'
           disabled 
           required />
@@ -86,12 +127,14 @@ const NewReport = () => {
           id="workdate" 
           name="workdate" 
           className='border p-1' 
+          defaultValue={data.workDate}
           required />
           <label htmlFor="description">รายละเอียด</label>
           <textarea 
           id="description" 
           name="description" 
           className='border p-1' 
+          defaultValue={data.description}
           required
           className='border p-1'></textarea>
           <label htmlFor="progression">ความคืบหน้า / ความสำเร็จ</label>
@@ -99,6 +142,7 @@ const NewReport = () => {
           id="progression" 
           name="progression" 
           className='border p-1' 
+          defaultValue={data.progression}
           required
           className='border p-1'></textarea>
           <div className='flex flex-wrap gap-4 items-center'>
@@ -107,6 +151,7 @@ const NewReport = () => {
           type="number" 
           id="hours" 
           name="hours" 
+          defaultValue={data.hours}
           min={0} 
           max={7} 
           required 
@@ -116,14 +161,21 @@ const NewReport = () => {
           type="number" 
           id="minutes" 
           name="minutes" 
+          defaultValue={data.minutes}
           min={0} 
           max={59} 
           required 
           className='border p-1 flex-1'/>
           <span>นาที</span>
           </div>
-          
           <label htmlFor="files">ไฟล์แนบ</label>
+          <ul>
+          {data.fileNames?.map((x, idx) => (
+            <li key={idx}>
+                <Link to={`${import.meta.env.VITE_API}/upload/${x}`}>{x}</Link>
+            </li>
+          ))}
+          </ul>
           <input 
           type="file" 
           id="files" 
@@ -149,9 +201,8 @@ const NewReport = () => {
         </Link>
         </div>
       </div>
-      
     </>
   )
 }
 
-export default NewReport
+export default EditReport

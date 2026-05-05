@@ -58,10 +58,13 @@ export const postJobRecord = async (req, res, next) => {
 export const putJobRecord = async (req, res, next) => {
     const {_id} = req.params
     const {username, name, workDate, description, progression, hours, minutes, fileNames} = req.body;
+
+    const file = req.files;
     
     if((!username && !name && !workDate && !description && !progression && !hours && !minutes && !fileNames) || !_id){
         return res.status(404).json({})
     }
+
     try{
         const edit = await modelJobRecord.findByIdAndUpdate(_id, {
             username,
@@ -71,7 +74,7 @@ export const putJobRecord = async (req, res, next) => {
             progression,
             hours,
             minutes,
-            fileNames
+            fileNames: [...fileNames, file.map((x, idx) => x.filename)]
         })
         if(!edit){
             return res.status(404).json({})

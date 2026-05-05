@@ -9,7 +9,7 @@ const SignIn = () => {
   const handleSubmit = async (e) => {
     setButtonSubmit(true);
     e.preventDefault();
-    const username = e.target.username.value.trim();
+    const username = e.target.username.value.trim().toLowerCase();
     const password = e.target.password.value;
 
     try{
@@ -28,9 +28,13 @@ const SignIn = () => {
       navigate('/');
     }catch(e){
       console.error(e)
-      alert('เกิดปัญหาทางเทคนิค');
+      setButtonSubmit(false);
+      if(e.response.status === 401){
+        return alert('ชื่อผู้ใช้งานหรือรหัสผ่านไม่ถูกต้อง')
+      }
+      return alert('เกิดปัญหาทางเทคนิค');
     }
-    setButtonSubmit(false);
+    
   }
   return (
     <>

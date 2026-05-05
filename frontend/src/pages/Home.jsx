@@ -22,7 +22,7 @@ const Home = () => {
   const fetchData = async () => {
     try{
       const res = await axios.get(
-        `${import.meta.env.VITE_API}/jobRecord`,
+        `${import.meta.env.VITE_API}/job-record`,
         {
             headers: {
               'Authorization': localStorage.getItem('token'),
@@ -42,15 +42,37 @@ const Home = () => {
     }
   }
 
+  const handleDelete = async (id) => {
+    const confirm_window = confirm(`ท่านยืนยันที่จะลบบันทึกรายงานการปฏิบัติงานนี้หรือไม่`);
+    if(!confirm_window){
+      return;
+    }
+    try{
+      const res = await axios.delete(
+        `${import.meta.env.VITE_API}/job-record/${id}`, 
+        {
+          headers: {
+            'Authorization': localStorage.getItem('token')
+          }
+        }
+      );
+      alert('ระบบได้ลบบันทึกรายงานการปฏิบัติงานนี้แล้ว')
+      navigate(0)
+    }catch(e){
+      console.log(e)
+      alert('เกิดปัญหาทางเทคนิค')
+    }
+  }
+
   return (
     <>
     <div className='flex justify-center p-4'>
       <div className='flex flex-col gap-4 border p-4'>
         <h1 className='text-center'>ระบบรายงานการปฏิบัติงานประจำวัน</h1>
         <Link 
-          to="/new-report"
-          className='border text-center bg-blue-500 text-white px-4 py-2 rounded'>
-          สร้างรายงาน
+          to="/new-record"
+          className='border text-center bg-blue-500 hover:bg-blue-400 text-white px-4 py-2 rounded'>
+          สร้างบันทึก
         </Link>
         <div className='overflow-x-scroll'>
         <table className='w-full'>
@@ -62,6 +84,7 @@ const Home = () => {
               <th>รายละเอียด</th>
               <th>ความคืบหน้า / ความสำเร็จ</th>
               <th>เอกสารประกอบ</th>
+              <th>จัดการ</th>
             </tr>
           </thead>
           <tbody>
@@ -85,6 +108,20 @@ const Home = () => {
                     </Link>
                   )
                 )}</td>
+                <td>
+                  { x.username === localStorage.getItem('username') &&
+                  <div className='flex flex-col'>
+                    <Link 
+                      to={`/edit/${x._id}`}
+                      className='border p-1 bg-blue-500 hover:bg-blue-400 text-white text-center'>แก้ไข</Link>
+                    <button 
+                      onClick={() => handleDelete(x._id)}
+                      className='border p-1 bg-red-500 hover:bg-red-400 text-white text-center'>
+                        ลบ
+                      </button>
+                  </div>
+                  }
+                </td>
               </tr>
             )
           })
@@ -92,7 +129,9 @@ const Home = () => {
           </tbody>
         </table>
 </div>
-<button onClick={handleSignOut}>
+<button 
+  onClick={handleSignOut}
+  className='bg-red-500 hover:bg-red-400'>
       ออกจากระบบ
     </button>
       </div>

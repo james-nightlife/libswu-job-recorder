@@ -8,6 +8,7 @@ import SignIn from './pages/SignIn'
 import { createBrowserRouter, createRoutesFromElements, Route, RouterProvider } from 'react-router-dom'
 import LayoutRoot from './layout/LayoutRoot'
 import NewReport from './pages/NewReport'
+import EditReport from './pages/EditReport'
 
 function App() {
   const router = createBrowserRouter(
@@ -15,11 +16,12 @@ function App() {
       <Route path='/' element={<LayoutRoot />}>
         <Route index element={<Home />} />
         <Route path='sign-in' element={<SignIn />} />
-        <Route path='new-report' element={<NewReport />} />
+        <Route path='new-record' element={<NewReport />} />
         <Route path='*' element={<h1>ไม่พบหน้า</h1>} />
+        <Route path='edit/:_id' element={<EditReport />} />
       </Route>
     ),{
-      basename: '/jobRecorder'
+      basename: '/job-recorder'
     }
   )
 

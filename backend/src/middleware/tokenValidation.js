@@ -4,8 +4,7 @@ export const validateToken = (req, res, next) => {
   const authHeader = req.headers.authorization;
 
   if (!authHeader) {
-    return res.status(200).json({
-      success: false,
+    return res.status(204).json({
       message: "No token",
     });
   }
