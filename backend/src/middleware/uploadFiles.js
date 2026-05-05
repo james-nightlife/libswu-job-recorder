@@ -22,7 +22,7 @@ const storage = multer.diskStorage({
 const fileFilter = (req, file, cb) => {
   if (!file) return cb(null, true); // ป้องกันเคสไม่มีไฟล์ ส่งผ่านไปเลย
 
-  const allowed = ["pdf", "png", "jpg", "jpeg"];
+  const allowed = ["pdf", "png", "jpg", "jpeg", 'docx'];
   const ext = file.originalname.split(".").pop().toLowerCase();
 
   if (!allowed.includes(ext)) {

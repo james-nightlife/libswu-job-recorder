@@ -94,7 +94,7 @@ const Home = () => {
               <tr key={idx}>
                 <td>{idx+1}</td>
                 <td>{x.name}</td>
-                <td>{x.workDate}</td>
+                <td>{new Date(x.workDate).toLocaleDateString('th-TH', {day: 'numeric', month: 'long', year: 'numeric'})}</td>
                 <td>{x.description}</td>
                 <td>{x.progression}</td>
                 <td>{x.fileNames.map((x, idx) => 

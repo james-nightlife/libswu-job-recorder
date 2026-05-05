@@ -123,7 +123,7 @@ const NewReport = () => {
           <span>นาที</span>
           </div>
           
-          <label htmlFor="files">ไฟล์แนบ</label>
+          <label htmlFor="files">เอกสารประกอบ (ถ้ามี)</label>
           <input 
           type="file" 
           id="files" 
