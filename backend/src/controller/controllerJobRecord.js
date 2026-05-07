@@ -57,8 +57,7 @@ export const postJobRecord = async (req, res, next) => {
 
 export const putJobRecord = async (req, res, next) => {
     const {_id} = req.params
-    const {username, name, workDate, description, progression, hours, minutes, fileNames} = req.body;
-
+    const {username, name, workDate, description, progression, hours, minutes, fileNames, oldFiles} = req.body;
     const file = req.files;
     
     if((!username && !name && !workDate && !description && !progression && !hours && !minutes && !fileNames) || !_id){
@@ -74,7 +73,7 @@ export const putJobRecord = async (req, res, next) => {
             progression,
             hours,
             minutes,
-            fileNames: [...fileNames, file.map((x, idx) => x.filename)]
+            fileNames: [...oldFiles.split(','), ...file.map((x, idx) => x.filename)]
         })
         if(!edit){
             return res.status(404).json({})
@@ -85,11 +84,7 @@ export const putJobRecord = async (req, res, next) => {
         return res.status(500).json({
             message: e.name
         })
-    }
-
-
-    
-    
+    }   
 }
 
 export const deleteJobRecord = async (req, res, next) => {

@@ -15,10 +15,10 @@ function App() {
     createRoutesFromElements(
       <Route path='/' element={<LayoutRoot />}>
         <Route index element={<Home />} />
-        <Route path='sign-in' element={<SignIn />} />
-        <Route path='new-record' element={<NewReport />} />
+        <Route path='/sign-in' element={<SignIn />} />
+        <Route path='/new-record' element={<NewReport />} />
         <Route path='*' element={<h1>ไม่พบหน้า</h1>} />
-        <Route path='edit/:_id' element={<EditReport />} />
+        <Route path='/edit/:_id' element={<EditReport />} />
       </Route>
     ),{
       basename: '/job-recorder'

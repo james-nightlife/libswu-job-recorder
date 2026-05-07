@@ -87,14 +87,14 @@ const NewReport = () => {
           name="workdate" 
           className='border p-1' 
           required />
-          <label htmlFor="description">รายละเอียด</label>
+          <label htmlFor="description">รายละเอียดงาน</label>
           <textarea 
           id="description" 
           name="description" 
           className='border p-1' 
           required
           className='border p-1'></textarea>
-          <label htmlFor="progression">หลักฐานแสดงความคืบหน้า / ความสำเร็จ</label>
+          <label htmlFor="progression">รายละเอียดความคืบหน้า / ความสำเร็จ</label>
           <textarea 
           id="progression" 
           name="progression" 
