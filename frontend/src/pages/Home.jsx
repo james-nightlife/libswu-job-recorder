@@ -159,7 +159,7 @@ const Home = () => {
           dataPreview.map((x, idx) => {
             return(
               <tr key={idx} className='hover:bg-gray-50 transition-colors'>
-                <td className='text-center'>{idx+1}</td>
+                <td className='text-center'>{(offset * (page - 1)) + (idx + 1)}</td>
                 <td className='whitespace-nowrap font-medium'>{x.name}</td>
                 <td className='whitespace-nowrap'>{new Date(x.workDate).toLocaleDateString('th-TH', {day: 'numeric', month: 'long', year: 'numeric'})}</td>
                 <td className='truncate max-w-62.5'>

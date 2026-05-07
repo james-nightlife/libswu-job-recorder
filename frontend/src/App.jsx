@@ -21,7 +21,7 @@ function App() {
         <Route path='/edit/:_id' element={<EditReport />} />
       </Route>
     ),{
-      basename: '/job-recorder'
+      basename: import.meta.env.VITE_BASENAME
     }
   )
 

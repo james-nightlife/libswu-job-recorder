@@ -40,6 +40,9 @@ const SignIn = () => {
     <>
       <div className='flex justify-center p-4'>
         <div className='flex flex-col gap-4 border p-4'>
+          <div className='flex justify-center'>
+            <img src={`${import.meta.env.VITE_BASENAME}/SWU_Central_Library_TH_Color.png`} className='h-[100px]' />
+          </div>
         <h1 className='text-center'>ระบบรายงานการปฏิบัติงานประจำวัน</h1>
         <h2 className='text-center'>ลงชื่อเข้าใช้งาน</h2>
         <form 
