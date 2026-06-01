@@ -35,7 +35,7 @@ const Home = () => {
 
   useEffect(() => {
     if(!localStorage.getItem('token')) {
-      navigate('/sign-in');
+      return navigate('/sign-in');
     }
     fetchData();
   }, [])

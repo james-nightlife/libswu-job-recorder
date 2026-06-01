@@ -65,42 +65,42 @@ const NewReport = () => {
   return (
     <>
       <div className='flex justify-center p-4'>
-        <div className='flex flex-col gap-4 p-4 border'>
+        <div className='flex flex-col gap-4 p-4 border max-w-[1440px] w-full'>
           <h1 className='text-center'>ระบบรายงานการปฏิบัติงานประจำวัน</h1>
           <h2 className='text-center'>สร้างรายงานใหม่</h2>
         <form 
         onSubmit={handleSubmit}
         className='flex flex-col w-full gap-2'>
-          <label htmlFor="name">ชื่อ-สกุล</label>
-          <input 
-          type="text" 
-          id="name" 
-          name="name" 
-          value={localStorage.getItem('name')} 
-          className='border p-1'
-          disabled 
-          required />
-          <label htmlFor="workdate">วันที่ปฏิบัติงาน</label>
-          <input 
-          type="date" 
-          id="workdate" 
-          name="workdate" 
-          className='border p-1' 
-          required />
+          <div className='flex flex-wrap gap-4 items-center'>
+            <label htmlFor="name">ชื่อ-สกุล</label>
+            <input 
+            type="text" 
+            id="name" 
+            name="name" 
+            value={localStorage.getItem('name')} 
+            className='border p-1 flex-1'
+            disabled 
+            required />
+            <label htmlFor="workdate">วันที่ปฏิบัติงาน</label>
+            <input 
+            type="date" 
+            id="workdate" 
+            name="workdate" 
+            className='border p-1 p-1 flex-1' 
+            required />
+          </div>
           <label htmlFor="description">รายละเอียดงาน</label>
           <textarea 
           id="description" 
-          name="description" 
-          className='border p-1' 
+          name="description"  
           required
-          className='border p-1'></textarea>
+          className='border p-1 h-[100px]'></textarea>
           <label htmlFor="progression">รายละเอียดความคืบหน้า / ความสำเร็จ</label>
           <textarea 
           id="progression" 
           name="progression" 
-          className='border p-1' 
           required
-          className='border p-1'></textarea>
+          className='border p-1 h-[100px]'></textarea>
           <div className='flex flex-wrap gap-4 items-center'>
             <label>ระยะเวลา</label>
           <input 
@@ -121,20 +121,19 @@ const NewReport = () => {
           required 
           className='border p-1 flex-1'/>
           <span>นาที</span>
-          </div>
-          
           <label htmlFor="files">เอกสารประกอบ (ถ้ามี)</label>
           <input 
           type="file" 
           id="files" 
           name="files" 
-          className='text-sm text-stone-500
+          className='flex-1 text-sm text-stone-500
    file:mr-5 file:py-1 file:px-3 file:border
    file:text-xs file:font-medium
    file:bg-stone-50 file:text-stone-700
    hover:file:cursor-pointer hover:file:bg-blue-50
    hover:file:text-blue-700'
           multiple />
+          </div>
           <button 
           type="submit" 
           disabled={buttonSubmit}

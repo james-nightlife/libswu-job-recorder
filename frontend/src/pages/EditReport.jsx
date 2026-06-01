@@ -106,19 +106,20 @@ const EditReport = () => {
   return (
     <>
         <div className='flex justify-center p-4'>
-        <div className='flex flex-col gap-4 p-4 border'>
+        <div className='flex flex-col gap-4 p-4 border max-w-[1440px] w-full'>
           <h1 className='text-center'>ระบบรายงานการปฏิบัติงานประจำวัน</h1>
           <h2 className='text-center'>แก้ไขบันทึก</h2>
         <form 
         onSubmit={handleSubmit}
         className='flex flex-col w-full gap-2'>
-          <label htmlFor="name">ชื่อ-สกุล</label>
+          <div className='flex flex-wrap gap-4 items-center'>
+            <label htmlFor="name">ชื่อ-สกุล</label>
           <input 
           type="text" 
           id="name" 
           name="name" 
           value={data.name || ''} 
-          className='border p-1'
+          className='border p-1 flex-1'
           disabled 
           required />
           <label htmlFor="workdate">วันที่ปฏิบัติงาน</label>
@@ -126,9 +127,10 @@ const EditReport = () => {
           type="date" 
           id="workdate" 
           name="workdate" 
-          className='border p-1' 
+          className='border p-1 flex-1' 
           defaultValue={data.workDate}
           required />
+          </div>
           <label htmlFor="description">รายละเอียด</label>
           <textarea 
           id="description" 
