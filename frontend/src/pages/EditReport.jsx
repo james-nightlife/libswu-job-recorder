@@ -131,20 +131,22 @@ const EditReport = () => {
           defaultValue={data.workDate}
           required />
           </div>
-          <label htmlFor="description">รายละเอียด</label>
+          <label htmlFor="description">รายละเอียดงาน</label>
           <textarea 
           id="description" 
           name="description" 
           className='border p-1' 
           defaultValue={data.description}
           required
+          rows={5}
           className='border p-1'></textarea>
-          <label htmlFor="progression">ความคืบหน้า / ความสำเร็จ</label>
+          <label htmlFor="progression">รายละเอียดความคืบหน้า / ความสำเร็จ</label>
           <textarea 
           id="progression" 
           name="progression" 
           className='border p-1' 
           defaultValue={data.progression}
+          rows={5}
           required
           className='border p-1'></textarea>
           <div className='flex flex-wrap gap-4 items-center'>
@@ -176,7 +178,7 @@ const EditReport = () => {
             <li key={idx}>
                 <Link to={`${import.meta.env.VITE_API}/upload/${x}`}>{x}</Link>
             </li>
-          ))}
+          )) && 'ไม่มีไฟล์'}
           </ul>
           <input 
           type="file" 

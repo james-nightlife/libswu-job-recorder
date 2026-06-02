@@ -39,7 +39,7 @@ const SignIn = () => {
   return (
     <>
       <div className='flex justify-center p-4'>
-        <div className='flex flex-col gap-4 border p-4'>
+        <div className='flex flex-col gap-4 border rounded p-4'>
           <div className='flex justify-center'>
             <img src={`${import.meta.env.VITE_BASENAME}/SWU_Central_Library_TH_Color.png`} className='h-[100px]' />
           </div>
@@ -61,6 +61,15 @@ const SignIn = () => {
             name="password" required />
           <button type="submit" disabled={buttonSubmit}>ลงชื่อเข้าใช้งาน</button>
         </form>
+        <div className='border text-center p-1 gap-1 flex flex-col'>
+          <div>
+            <p>เวอร์ชัน 1.1.1 (2 มิถุนายน 2569)</p>
+          </div>
+          <div>
+            <p className='font-bold'>จัดทำโดย</p>
+            <p>งานเทคโนโลยีวิทยทรัพยากรดิจิทัล</p>
+          </div>
+        </div>
       </div>
       </div>
     </>

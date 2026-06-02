@@ -94,13 +94,15 @@ const NewReport = () => {
           id="description" 
           name="description"  
           required
-          className='border p-1 h-[100px]'></textarea>
+          rows={5}
+          className='border p-1'></textarea>
           <label htmlFor="progression">รายละเอียดความคืบหน้า / ความสำเร็จ</label>
           <textarea 
           id="progression" 
           name="progression" 
           required
-          className='border p-1 h-[100px]'></textarea>
+          rows={5}
+          className='border p-1'></textarea>
           <div className='flex flex-wrap gap-4 items-center'>
             <label>ระยะเวลา</label>
           <input 
@@ -110,7 +112,7 @@ const NewReport = () => {
           min={0} 
           max={7} 
           required 
-          className='border p-1 flex-1'/>
+          className='border p-1'/>
           <span>ชั่วโมง</span>
           <input 
           type="number" 
@@ -119,7 +121,7 @@ const NewReport = () => {
           min={0} 
           max={59} 
           required 
-          className='border p-1 flex-1'/>
+          className='border p-1'/>
           <span>นาที</span>
           <label htmlFor="files">เอกสารประกอบ (ถ้ามี)</label>
           <input 

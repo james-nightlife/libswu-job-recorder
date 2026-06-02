@@ -58,7 +58,7 @@ const Home = () => {
 
   const [page, setPage] = useState(1);
   const offset = 10;
-  const pages = Math.ceil(data.length/offset);
+  const pages = Math.ceil(filteredData.length/offset);
   //const dataPreview = data.slice((page-1)*(offset), ((page-1)*offset)+(offset))
 
   const dataPreview = useMemo(() => {
@@ -140,8 +140,9 @@ const Home = () => {
             <div>ผลลัพธ์ {filteredData.length} จากทั้งหมด {data.length} รายการ</div>
         </div>
         
-        <div className='w-full overflow-x-auto rounded-lg border border-gray-200'>
-        <table className='w-full text-sm sm:text-base border-collapse'>
+        <div className='w-full overflow-x-auto'>
+           {dataPreview.length ? (
+        <table className='w-full border-collapse'>
           <thead>
             <tr>
               <th className='whitespace-nowrap'>ที่</th>
@@ -201,10 +202,11 @@ const Home = () => {
           })
         }
           </tbody>
-        </table>
+        </table>)
+        : 'ไม่พบข้อมูล'}
 </div>
 <div className='flex gap-4 items-center'>
-                <button onClick={() => page > 1 && setPage(page-1)} className='border rounded-full flex-1 px-6 py-2 cursor-pointer bg-indigo-600 text-white'>ก่อนหน้า</button>
+                <button onClick={() => page > 1 && setPage(page-1)} className='flex-1 cursor-pointer'>ก่อนหน้า</button>
                 <div>หน้า </div>
                   <input 
                   value={page} 
@@ -218,7 +220,7 @@ const Home = () => {
                       setPage(val);
                     }}} />
                     <div> จาก {pages} </div>
-                <button onClick={() => page < pages && setPage(page+1)} className='border rounded-full flex-1 px-6 py-2 cursor-pointer bg-indigo-600 text-white'>ถัดไป</button>
+                <button onClick={() => page < pages && setPage(page+1)} className='flex-1 cursor-pointer'>ถัดไป</button>
             </div>
 <div className='flex justify-end mt-4 gap-4'>
   {
