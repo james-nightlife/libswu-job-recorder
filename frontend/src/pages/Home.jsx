@@ -8,7 +8,12 @@ import { saveAs } from 'file-saver';
 const Home = () => {
   const navigate = useNavigate();
 
-  const [data, setData] = useState([])
+  const [data, setData] = useState([]);
+
+  const userJob = data.filter((x) => (x.username === localStorage.getItem('username'))) 
+  const sum_minutes = userJob.map((x, y) => (x.minutes)).reduce((total, x) => (total + x), 0) % 60
+  const sum_hours = (userJob.map((x, y) => (x.hours)).reduce((total, x) => (total + x), 0) + (Math.floor(userJob.map((x, y) => (x.minutes)).reduce((total, x) => (total + x), 0) / 60))) % 7
+  const sum_day = Math.floor((userJob.map((x, y) => (x.hours)).reduce((total, x) => (total + x), 0) + (Math.floor(userJob.map((x, y) => (x.minutes)).reduce((total, x) => (total + x), 0) / 60))) / 7)
 
   const fetchData = async () => {
     try{
@@ -41,20 +46,24 @@ const Home = () => {
   }, [])
 
   const [search, setSearch] = useState("");
+  const [date, setDate] = useState('');
 
   /** PAGINATION */
 
   const filteredData = useMemo(() => {
         return data.filter((item) => {
         const searchStr = search.toLowerCase();
+        const workDate = new Date(item.workDate).getTime()
+
         return (
-            item.name?.toLowerCase().includes(searchStr) ||
+            (item.name?.toLowerCase().includes(searchStr) ||
             item.username?.toLowerCase().includes(searchStr) ||
             item.description?.toLowerCase().includes(searchStr) ||
-            item.progression?.toLowerCase().includes(searchStr)
+            item.progression?.toLowerCase().includes(searchStr)) &&
+            (!date || workDate === new Date(date).getTime())
         )
         });
-    }, [data, search]);
+    }, [data, search, date]);
 
   const [page, setPage] = useState(1);
   const offset = 10;
@@ -128,6 +137,9 @@ const Home = () => {
           </Link>
 
         </div>
+        <div>
+          ท่านรายงานแล้ว {sum_day} วัน {sum_hours} ชั่วโมง {sum_minutes} นาที
+        </div>
         <div className="flex gap-2 items-center">
             <label className="font-bold">ค้นหาข้อมูล</label>
             <input
@@ -137,6 +149,7 @@ const Home = () => {
             value={search}
             onChange={(e) => setSearch(e.target.value)}
             />
+            <input type="date" value={date} onChange={(e) => setDate(e.target.value)} />
             <div>ผลลัพธ์ {filteredData.length} จากทั้งหมด {data.length} รายการ</div>
         </div>
         
