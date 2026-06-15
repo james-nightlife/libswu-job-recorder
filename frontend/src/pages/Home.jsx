@@ -45,6 +45,7 @@ const Home = () => {
   const mytask_minutes = mytask.reduce((acc, x) => acc + (x.hours * 60) + x.minutes, 0);
 
   const [search, setSearch] = useState("");
+  const [date, setDate] = useState('');
 
   /** PAGINATION */
 
