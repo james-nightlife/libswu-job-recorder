@@ -24,7 +24,7 @@ const SignIn = () => {
       localStorage.setItem('token', data.token);
       localStorage.setItem('name', data.name);
       localStorage.setItem('username', data.username);
-      alert(`สวัสดี ${data.name}`);
+      //alert(`สวัสดี ${data.name}`);
       navigate('/');
     }catch(e){
       console.error(e)

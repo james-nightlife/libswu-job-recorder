@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo } from 'react'
+import React, { useEffect, useMemo, useRef } from 'react'
 import { useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom'
 import axios from 'axios'
@@ -7,10 +7,11 @@ import { saveAs } from 'file-saver';
 
 const Home = () => {
   const navigate = useNavigate();
-
   const [data, setData] = useState([]);
+  const timerId = useRef(null);
 
   const fetchData = async () => {
+    console.log('fetchData');
     try{
       const res = await axios.get(
         `${import.meta.env.VITE_API}/job-record`,
@@ -33,12 +34,23 @@ const Home = () => {
     }
   }
 
+  const realTimeUpdate = () => {
+    return setInterval(() => fetchData(), 10*1000)
+  }
+
   useEffect(() => {
     if(!localStorage.getItem('token')) {
       navigate('/sign-in');
       return;
     }
     fetchData();
+    timerId.current = realTimeUpdate();
+    return() => {
+      if(timerId.current){
+        clearInterval(timerId.current);
+        timerId.current = null;
+      }
+    }
   }, [])
 
   const mytask = data.filter(x => x.username === localStorage.getItem('username'));
@@ -47,19 +59,29 @@ const Home = () => {
   const [search, setSearch] = useState("");
   const [date, setDate] = useState('');
 
+  useEffect(() => {
+    console.log(date)
+  }, [date])
+
   /** PAGINATION */
 
   const filteredData = useMemo(() => {
     return data.filter((item) => {
       const searchStr = search.toLowerCase();
       return (
-        item.name?.toLowerCase().includes(searchStr) ||
+        (item.name?.toLowerCase().includes(searchStr) ||
         item.username?.toLowerCase().includes(searchStr) ||
         item.description?.toLowerCase().includes(searchStr) ||
-        item.progression?.toLowerCase().includes(searchStr)
+        item.progression?.toLowerCase().includes(searchStr)) &&
+        (
+          (date && item.workDate) ? 
+          (new Date(item.workDate).toISOString().split('T')[0] === date) :
+          (date && !item.workDate) ? false : true
+
+        )
       )
     });
-  }, [data, search]);
+  }, [data, search, date]);
 
   const data_minutes = filteredData.reduce((acc, x) => acc + (x.hours * 60) + x.minutes, 0);
 
@@ -78,7 +100,7 @@ const Home = () => {
   }, [search]);
 
   useEffect(() => {
-    setPage(1)
+    setPage(page > pages ? 1 : page)
     //console.log('data', data)
   }, [data])
 
@@ -143,6 +165,7 @@ const Home = () => {
               className="border p-2 rounded-lg w-full md:w-1/2"
               value={search}
               onChange={(e) => setSearch(e.target.value)} />
+              <input type='date' value={date} onChange={(e) => setDate(e.target.value)} />
             <div>ผลลัพธ์ {filteredData.length} จากทั้งหมด {data.length} รายการ ({Math.floor(data_minutes / 420)} วัน {Math.floor((data_minutes % 420) / 60)} ชั่วโมง {data_minutes % 60} นาที)</div>
           </div>
           {/** ตารางแสดงข้อมูล */}
